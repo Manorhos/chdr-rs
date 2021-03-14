@@ -1,0 +1,12 @@
+[package]
+name = "chdr"
+version = "0.1.0"
+authors = ["Niels Wießner <n.h.wiessner@gmail.com>"]
+edition = "2018"
+license = "BSD-3-Clause"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chdr-sys = { path = "sys" }
+thiserror = "1.0"
