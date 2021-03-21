@@ -18,6 +18,8 @@ pub enum ChdError {
     FileDoesntExistError,
     #[error("Path encoding error")]
     IncompatiblePathEncodingError,
+    #[error("Header is null")]
+    HeaderNull,
     #[error("Provided buffer is too small")]
     BufferTooSmallError,
     #[error("Couldn't parse CHD metadata")]
@@ -58,8 +60,16 @@ impl ChdFile {
             return Err(ChdError::ChdrCError(ret));
         }
 
-        let chd_header = unsafe {
-            *chd_get_header(chd)
+        let chd_header_ptr = unsafe {
+            chd_get_header(chd)
+        };
+
+        let chd_header = if !chd_header_ptr.is_null() {
+            unsafe {
+                *chd_header_ptr
+            }
+        } else {
+            return Err(ChdError::HeaderNull);
         };
 
         Ok(ChdFile {
