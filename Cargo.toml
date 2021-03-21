@@ -10,3 +10,4 @@ license = "BSD-3-Clause"
 [dependencies]
 chdr-sys = { path = "sys" }
 thiserror = "1.0"
+text_io = "0.1.8"
