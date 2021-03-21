@@ -15,13 +15,13 @@ pub enum ChdError {
     #[error("chd_error: `{0}`")]
     ChdrCError(chdr_sys::chd_error),
     #[error("File does not exist")]
-    FileDoesntExistError,
+    FileDoesntExist,
     #[error("Path encoding error")]
-    IncompatiblePathEncodingError,
+    IncompatiblePathEncoding,
     #[error("Header is null")]
     HeaderNull,
     #[error("Provided buffer is too small")]
-    BufferTooSmallError,
+    BufferTooSmall,
     #[error("Couldn't parse CHD metadata")]
     MetadataTextParseError(#[from] text_io::Error),
     #[error("No CDROM metadata present")]
@@ -38,13 +38,13 @@ impl ChdFile {
         where P: AsRef<Path>
     {
         if !path.as_ref().exists() {
-            return Err(ChdError::FileDoesntExistError);
+            return Err(ChdError::FileDoesntExist);
         }
         // TODO: This is wrong (enforces UTF-8), but what would be a more correct way
         // of passing this to libchdr?
         let path_str = path.as_ref().to_str();
         if path_str.is_none() {
-            return Err(ChdError::IncompatiblePathEncodingError);
+            return Err(ChdError::IncompatiblePathEncoding);
         }
         let path_cstring = CString::new(path_str.unwrap()).unwrap();
         let mut chd: *mut chd_file = std::ptr::null_mut();
@@ -91,7 +91,7 @@ impl ChdFile {
     #[must_use]
     pub fn read_hunk(&mut self, index: u32, buffer: &mut [u8]) -> Result<(), ChdError> {
         if buffer.len() < self.hunk_len() as usize {
-            return Err(ChdError::BufferTooSmallError);
+            return Err(ChdError::BufferTooSmall);
         }
         let ret = unsafe {
             chd_read(self.chd, index, buffer.as_mut_ptr() as *mut c_void)
