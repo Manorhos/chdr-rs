@@ -161,3 +161,5 @@ impl Drop for ChdFile {
         }
     }
 }
+
+unsafe impl Send for ChdFile {}
