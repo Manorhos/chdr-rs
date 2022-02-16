@@ -10,17 +10,19 @@ pub const _HAS_EXCEPTIONS: u32 = 1;
 pub const _STL_LANG: u32 = 0;
 pub const _HAS_CXX17: u32 = 0;
 pub const _HAS_CXX20: u32 = 0;
+pub const _HAS_CXX23: u32 = 0;
 pub const _HAS_NODISCARD: u32 = 0;
 pub const WCHAR_MIN: u32 = 0;
 pub const WCHAR_MAX: u32 = 65535;
 pub const WINT_MIN: u32 = 0;
 pub const WINT_MAX: u32 = 65535;
+pub const _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE: u32 = 1;
+pub const _CRT_BUILD_DESKTOP_APP: u32 = 1;
 pub const _ARGMAX: u32 = 100;
 pub const _CRT_INT_MAX: u32 = 2147483647;
 pub const _CRT_FUNCTIONS_REQUIRED: u32 = 1;
 pub const _CRT_HAS_CXX17: u32 = 0;
-pub const _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE: u32 = 1;
-pub const _CRT_BUILD_DESKTOP_APP: u32 = 1;
+pub const _CRT_HAS_C11: u32 = 1;
 pub const _CRT_INTERNAL_NONSTDC_NAMES: u32 = 1;
 pub const __STDC_SECURE_LIB__: u32 = 200411;
 pub const __GOT_SECURE_LIB__: u32 = 200411;
@@ -37,6 +39,7 @@ pub const _CRT_INTERNAL_PRINTF_STANDARD_SNPRINTF_BEHAVIOR: u32 = 2;
 pub const _CRT_INTERNAL_PRINTF_LEGACY_WIDE_SPECIFIERS: u32 = 4;
 pub const _CRT_INTERNAL_PRINTF_LEGACY_MSVCRT_COMPATIBILITY: u32 = 8;
 pub const _CRT_INTERNAL_PRINTF_LEGACY_THREE_DIGIT_EXPONENTS: u32 = 16;
+pub const _CRT_INTERNAL_PRINTF_STANDARD_ROUNDING: u32 = 32;
 pub const _CRT_INTERNAL_SCANF_SECURECRT: u32 = 1;
 pub const _CRT_INTERNAL_SCANF_LEGACY_WIDE_SPECIFIERS: u32 = 2;
 pub const _CRT_INTERNAL_SCANF_LEGACY_MSVCRT_COMPATIBILITY: u32 = 4;
@@ -1406,6 +1409,12 @@ extern "C" {
 }
 extern "C" {
     pub fn chd_get_header(chd: *mut chd_file) -> *const chd_header;
+}
+extern "C" {
+    pub fn chd_read_header(
+        filename: *const ::std::os::raw::c_char,
+        header: *mut chd_header,
+    ) -> chd_error;
 }
 extern "C" {
     pub fn chd_read(
