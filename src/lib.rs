@@ -26,6 +26,8 @@ pub enum ChdError {
     MetadataTextParseError(#[from] text_io::Error),
     #[error("No CDROM metadata present")]
     NoCdromMetadata,
+    #[error("Parameter out of range")]
+    OutOfRange,
 }
 
 pub struct ChdFile {
